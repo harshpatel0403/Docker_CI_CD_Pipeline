@@ -30,9 +30,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker-compose down --remove-orphans
-          docker-compose build
-          docker-compose up -d
+          docker build -t funning-nextjs-app:latest .
+          docker push funning-nextjs-app:latest
 
   deploy:
     runs-on: ubuntu-latest
