@@ -30,8 +30,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t funning-nextjs-app:latest .
-          docker push funning-nextjs-app:latest
+          docker build -t patelharsh4304/testdocker_ci_cd_pipeline:funning-nextjs-app:latest .
+          docker push patelharsh4304/testdocker_ci_cd_pipeline:funning-nextjs-app:latest
 
   deploy:
     runs-on: ubuntu-latest
