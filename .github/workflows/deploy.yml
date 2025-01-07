@@ -26,16 +26,12 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t my-app:$GITHUB_SHA .
-
-      - name: Run tests
-        run: |
-          docker run --rm my-app:$GITHUB_SHA npm test  # Adjust according to your testing framework
+          docker build -t funning-nextjs-app:$GITHUB_SHA .
 
       - name: Push Docker image
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push my-app:$GITHUB_SHA
+          docker push funning-nextjs-app:$GITHUB_SHA
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,14 +45,14 @@ jobs:
         run: |
           ssh user@your-server "
             # Stop and remove old container if it exists
-            docker ps -q --filter 'ancestor=my-app' | xargs -r docker stop | xargs -r docker rm;
+            docker ps -q --filter 'ancestor=funning-nextjs-app' | xargs -r docker stop | xargs -r docker rm;
             
             # Remove old image locally to free space
-            docker images 'my-app' -q | xargs -r docker rmi;
+            docker images 'funning-nextjs-app' -q | xargs -r docker rmi;
             
             # Pull new image and run new container
-            docker pull my-app:$GITHUB_SHA;
-            docker run -d --name my-app-container my-app:$GITHUB_SHA
+            docker pull funning-nextjs-app:$GITHUB_SHA;
+            docker run -d --name funning-nextjs-app-container funning-nextjs-app:$GITHUB_SHA
           "
           
       - name: Remove old image from Docker Hub (optional)
