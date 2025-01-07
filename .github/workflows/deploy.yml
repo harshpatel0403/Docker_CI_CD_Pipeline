@@ -24,14 +24,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build Docker image
+      - name: Log in to Docker Hub
         run: |
-          docker build -t funning-nextjs-app:$GITHUB_SHA .
+          docker login -u harshpatel434 -p ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Push Docker image
+      - name: Build and Push Docker Image
         run: |
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push funning-nextjs-app:$GITHUB_SHA
+          docker-compose down --remove-orphans
+          docker-compose build
+          docker-compose up -d
 
   deploy:
     runs-on: ubuntu-latest
